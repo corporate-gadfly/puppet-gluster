@@ -348,8 +348,8 @@ describe Facter::Util::Fact do
       allow(Facter).to receive(:value) # Stub all other calls
       allow(Facter).to receive(:value).with('gluster_custom_binary').and_return(gluster_binary)
       allow(File).to receive(:executable?).with(gluster_binary).and_return(true)
-      allow(Facter::Util::Resolution).to receive(:exec).with("#{gluster_binary} peer status --xml").and_return('Connection failed. Please check if gluster daemon is operational.')
-      allow(Facter::Util::Resolution).to receive(:exec).with("#{gluster_binary} volume info --xml").and_return('Connection failed. Please check if gluster daemon is operational.')
+      allow(Facter::Core::Execution).to receive(:execute).with("#{gluster_binary} peer status --xml").and_return('Connection failed. Please check if gluster daemon is operational.')
+      allow(Facter::Core::Execution).to receive(:execute).with("#{gluster_binary} volume info --xml").and_return('Connection failed. Please check if gluster daemon is operational.')
     end
 
     it 'detect gluster binary' do
@@ -397,8 +397,8 @@ describe Facter::Util::Fact do
       allow(Facter).to receive(:value) # Stub all other calls
       allow(Facter).to receive(:value).with('gluster_custom_binary').and_return(gluster_binary)
       allow(File).to receive(:executable?).with(gluster_binary).and_return(true)
-      allow(Facter::Util::Resolution).to receive(:exec).with("#{gluster_binary} peer status --xml") { gluster_no_peer }
-      allow(Facter::Util::Resolution).to receive(:exec).with("#{gluster_binary} volume info --xml") { gluster_no_volume }
+      allow(Facter::Core::Execution).to receive(:execute).with("#{gluster_binary} peer status --xml") { gluster_no_peer }
+      allow(Facter::Core::Execution).to receive(:execute).with("#{gluster_binary} volume info --xml") { gluster_no_volume }
     end
 
     it 'detect gluster binary' do
@@ -446,8 +446,8 @@ describe Facter::Util::Fact do
       allow(Facter).to receive(:value) # Stub all other calls
       allow(Facter).to receive(:value).with('gluster_custom_binary').and_return(gluster_binary)
       allow(File).to receive(:executable?).with(gluster_binary).and_return(true)
-      allow(Facter::Util::Resolution).to receive(:exec).with("#{gluster_binary} peer status --xml") { gluster_peer_status_xml }
-      allow(Facter::Util::Resolution).to receive(:exec).with("#{gluster_binary} volume info --xml") { gluster_no_volume }
+      allow(Facter::Core::Execution).to receive(:execute).with("#{gluster_binary} peer status --xml") { gluster_peer_status_xml }
+      allow(Facter::Core::Execution).to receive(:execute).with("#{gluster_binary} volume info --xml") { gluster_no_volume }
     end
 
     it 'detect gluster binary' do
@@ -495,9 +495,9 @@ describe Facter::Util::Fact do
       allow(Facter).to receive(:value) # Stub all other calls
       allow(Facter).to receive(:value).with('gluster_custom_binary').and_return(gluster_binary)
       allow(File).to receive(:executable?).with(gluster_binary).and_return(true)
-      allow(Facter::Util::Resolution).to receive(:exec).with("#{gluster_binary} peer status --xml") { gluster_peer_status_xml }
-      allow(Facter::Util::Resolution).to receive(:exec).with("#{gluster_binary} volume info --xml") { gluster_volume_info_xml }
-      allow(Facter::Util::Resolution).to receive(:exec).with("#{gluster_binary} volume status #{gluster_volume_one} --xml") { gluster_volume_one_status_xml }
+      allow(Facter::Core::Execution).to receive(:execute).with("#{gluster_binary} peer status --xml") { gluster_peer_status_xml }
+      allow(Facter::Core::Execution).to receive(:execute).with("#{gluster_binary} volume info --xml") { gluster_volume_info_xml }
+      allow(Facter::Core::Execution).to receive(:execute).with("#{gluster_binary} volume status #{gluster_volume_one} --xml") { gluster_volume_one_status_xml }
     end
 
     it 'detect gluster binary' do
