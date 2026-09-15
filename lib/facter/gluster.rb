@@ -37,7 +37,7 @@ if binary
 
   # Get our peer information from gluster peer status --xml (Code credit to github user: coder-hugo)
   begin
-    peer_status_xml = REXML::Document.new(Facter::Util::Resolution.exec("#{binary} peer status --xml"))
+    peer_status_xml = REXML::Document.new(Facter::Core::Execution.execute("#{binary} peer status --xml"))
     REXML::XPath.match(peer_status_xml, '/cliOutput/peerStatus/peer').each do |peer_xml|
       # Get the peer hostname
       peer = peer_xml.elements['hostname'].text.to_s
@@ -60,7 +60,7 @@ if binary
 
   # Get our volume information from gluster volume info
   begin
-    volume_info_xml = REXML::Document.new(Facter::Util::Resolution.exec("#{binary} volume info --xml"))
+    volume_info_xml = REXML::Document.new(Facter::Core::Execution.execute("#{binary} volume info --xml"))
     REXML::XPath.match(volume_info_xml, '/cliOutput/volInfo/volumes/volume').each do |volume_xml|
       volume = volume_xml.elements['name'].text.to_s
 
@@ -99,7 +99,7 @@ if binary
       next unless vol_status == 'Started'
 
       begin
-        volume_status_xml = REXML::Document.new(Facter::Util::Resolution.exec("#{binary} volume status #{volume} --xml"))
+        volume_status_xml = REXML::Document.new(Facter::Core::Execution.execute("#{binary} volume status #{volume} --xml"))
         volume_ports[volume] = REXML::XPath.match(volume_status_xml, "/cliOutput/volStatus/volumes/volume/node[starts-with(hostname/text(), '#{Facter.value('hostname')}')]/port/text()")
 
         # Define gluster_volumes[volume]['ports'] as an array so we can .push() to it.
